@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Survey from './pages/Survey.jsx';
 import Headers from './components/Headers.jsx';
+import ClientForm from './components/ClientForm.jsx';
+import FreelanceForm from './components/FreelanceForm.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,7 +16,10 @@ root.render(
       <Headers />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/survey" element={<Survey />} />
+        <Route path="/survey" element={<Survey />}>
+          <Route path="client" element={<ClientForm />} />
+          <Route path="freelance" element={<FreelanceForm />} />
+        </Route>
       </Routes>
     </Router>
   </React.StrictMode>
