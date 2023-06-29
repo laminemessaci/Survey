@@ -10,16 +10,19 @@ import { colors } from "../utils/style/colors";
  * @return {ReactNode} The rendered footer component.
  */
 export function Footer() {
+  // Get the theme and toggleTheme function from the ThemeContext
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const themeMessage =
-    theme === "dark" ? "Passer en mode clair" : "Passer en mode sombre";
+  
+  // Check if the theme is dark
+  const isDarkTheme = theme === "dark";
+  
+  // Set the message based on the theme
+  const themeMessage = isDarkTheme ? "Passer en mode clair" : "Passer en mode sombre";
 
+  // Render the footer component
   return (
-    <FooterContainer isDarkTheme={theme === "dark"}>
-      <ThemeSwitcher
-        onClick={() => toggleTheme()}
-        isDarkTheme={theme === "dark"}
-      >
+    <FooterContainer isDarkTheme={isDarkTheme}>
+      <ThemeSwitcher onClick={toggleTheme} isDarkTheme={isDarkTheme}>
         {themeMessage}
       </ThemeSwitcher>
     </FooterContainer>

@@ -4,24 +4,23 @@ import styled from "styled-components";
 
 import { ThemeContext } from "../utils/context/providers";
 import { colors } from "../utils/style/colors";
+import Error404Illustration from "../assets/404-illustration.png";
 
-export function ErrorMain({ errorText }) {
+export function Error404() {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <ErrorContainer isDarkTheme={theme === "dark"}>
-      <ErrorText>
-        {errorText}
-      </ErrorText>
-      <CallToActionLink to="/">
-        Revenir à l'accueil
-      </CallToActionLink>
-    </ErrorContainer>
+    <Error404Container isDarkTheme={theme === "dark"}>
+      <ErrorText>Oups...</ErrorText>
+      <ErrorIllustration src={Error404Illustration} alt="Erreur 404" />
+      <ErrorText>Il semblerait qu'il y ait un problème</ErrorText>
+      <CallToActionLink to="/">Revenir à l'accueil</CallToActionLink>
+    </Error404Container>
   );
 }
 
-const ErrorContainer = styled.main`
-  padding: 10rem 4rem;
+const Error404Container = styled.main`
+  padding: 4rem;
 
   text-align: center;
 
@@ -34,6 +33,10 @@ const ErrorText = styled.p`
 
   font-size: 2rem;
   font-weight: 700;
+`;
+
+const ErrorIllustration = styled.img`
+  margin: 3rem 0;
 `;
 
 const CallToActionLink = styled(Link)`
