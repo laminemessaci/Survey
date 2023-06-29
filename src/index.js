@@ -1,29 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home.jsx';
-import Survey from './pages/Survey.jsx';
-import Headers from './components/Headers.jsx';
-import ClientForm from './components/ClientForm.jsx';
-import FreelanceForm from './components/FreelanceForm.jsx';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Error from './components/Error.jsx';
-import Freelances from './pages/Freelances/index.jsx';
+import './index.css';
+import {Home} from './pages/Home.jsx';
+import {Survey} from './pages/Survey.jsx';
+import reportWebVitals from './reportWebVitals';
+import { SurveyProvider, ThemeProvider } from './utils/context/providers.jsx';
+import { GlobalStyle } from './utils/style/GlobalStyle.jsx';
+import { Header } from './components/Header.jsx';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <Headers />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/survey/:questionNumber" element={<Survey />} />
-        {/* <Route path="client" element={<ClientForm />} /> */}
+      <ThemeProvider>
+        <SurveyProvider>
+          <GlobalStyle />
+          <Header />
 
-        <Route path="/freelances" element={<Freelances />} />
-        <Route path="*" element={<Error />} />
-      </Routes>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/survey/:questionNumber" element={<Survey />} />
+            {/* <Route path="client" element={<ClientForm />} /> */}
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </SurveyProvider>
+      </ThemeProvider>
     </Router>
   </React.StrictMode>
 );
