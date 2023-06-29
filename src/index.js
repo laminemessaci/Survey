@@ -8,6 +8,8 @@ import Survey from './pages/Survey.jsx';
 import Headers from './components/Headers.jsx';
 import ClientForm from './components/ClientForm.jsx';
 import FreelanceForm from './components/FreelanceForm.jsx';
+import Error from './components/Error.jsx';
+import Freelances from './pages/Freelances/index.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,10 +18,11 @@ root.render(
       <Headers />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/survey" element={<Survey />}>
-          <Route path="client" element={<ClientForm />} />
-          <Route path="freelance" element={<FreelanceForm />} />
-        </Route>
+        <Route path="/survey/:questionNumber" element={<Survey />} />
+        {/* <Route path="client" element={<ClientForm />} /> */}
+
+        <Route path="/freelances" element={<Freelances />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </Router>
   </React.StrictMode>
