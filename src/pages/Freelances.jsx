@@ -41,7 +41,7 @@ export function Freelances({ freelances }) {
         </CardsContainer>
       ) : (
         // Render a loader if there are no freelancer profiles
-        <Loader />
+        <Loader data-testid="loader"/>
       )}
     </FreelancesContainer>
   );
