@@ -1,28 +1,36 @@
+// Unit tests for the Survey component
 
-// TO DO
-// Test case 1: Check if the component renders without error
-test('renders survey component without error', () => {
-  // est to render component ?
+// Test case: Rendering the survey component
+it('renders the survey component', () => {
+  // TODO: Write test logic
 });
 
-// Test case 2: Check if the survey data is fetched correctly
-test('fetches survey data correctly', () => {
-  // Write your test code here
-  // Example: render(<Survey />);
-  // Expect the survey data to be fetched correctly
+// Test case: Saving user answer and navigating to the next question
+it('saves user answer and navigates to the next question', () => {
+  // TODO: Write test logic
 });
 
-// Test case 3: Check if the current question number is extracted correctly from URL parameters
-test('extracts current question number correctly', () => {
-  // Write your test code here
-  // Example: render(<Survey />);
-  // Expect the current question number to be extracted correctly
+// Test case: Handling error when fetching survey data
+it('handles error when fetching survey data', () => {
+  // TODO: Write test logic
 });
 
-// Test case 4: Check if the user's answer is saved correctly and navigation works
-test("saves user's answer and navigates correctly", () => {
-  // Write your test code here
-  // Example: render(<Survey />);
-  // Simulate user answering the question
-  // Expect the user's answer to be saved correctly and navigation to work
+// Test case: Selecting "Yes" answer button
+it('selects the "Yes" answer button', () => {
+  // TODO: Write test logic
+});
+
+// Test case: Selecting "No" answer button
+it('selects the "No" answer button', () => {
+  // TODO: Write test logic
+});
+
+// Test case: Clicking on the "Previous" navigation link
+it('clicks on the "Previous" navigation link', () => {
+  // TODO: Write test logic
+});
+
+// Test case: Clicking on the "Next" navigation link
+it('clicks on the "Next" navigation link', () => {
+  // TODO: Write test logic
 });

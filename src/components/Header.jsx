@@ -7,6 +7,11 @@ import { colors } from '../utils/style/colors';
 import ShinyLogo from '../assets/logo-shiny.svg';
 import ShinyTextLogo from '../assets/logo-text-shiny.svg';
 
+/**
+ * Renders the header component.
+ *
+ * @return {ReactElement} The rendered header component.
+ */
 export function Header() {
   const { theme } = useContext(ThemeContext);
   const { clearSurveyAnswers } = useContext(SurveyContext);
