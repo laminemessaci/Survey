@@ -1,25 +1,35 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from 'react';
 
 // Survey answers provider
 export const SurveyContext = createContext();
 
 /**
- * Creates a SurveyProvider component that wraps its children components.
- *
- * @param {Object} children - The children components to be wrapped.
- * @return {JSX.Element} The wrapped children components.
+ * SurveyProvider component that provides survey answers and functions to save and clear survey answers.
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components.
+ * @returns {React.ReactNode} The rendered component.
  */
 export const SurveyProvider = ({ children }) => {
-  const [answers, setAnswers] = useState({});
+  // State hook to store survey answers
+  const [surveyAnswers, setSurveyAnswers] = useState({});
 
-  const saveAnswers = (newAnswers) => {
-    setAnswers({ ...answers, ...newAnswers });
-  };
+  /**
+   * Function to save survey answers.
+   * @param {Object} newAnswers - The new survey answers to be saved.
+   */
+  const saveSurveyAnswers = useCallback((newAnswers) => {
+    setSurveyAnswers((prevAnswers) => ({ ...prevAnswers, ...newAnswers }));
+  }, []);
 
-  const clearAnswers = () => setAnswers({});
+  /**
+   * Function to clear survey answers.
+   */
+  const clearSurveyAnswers = useCallback(() => setSurveyAnswers({}), []);
 
   return (
-    <SurveyContext.Provider value={{ answers, saveAnswers, clearAnswers }}>
+    <SurveyContext.Provider
+      value={{ surveyAnswers, saveSurveyAnswers, clearSurveyAnswers }}
+    >
       {children}
     </SurveyContext.Provider>
   );
@@ -29,10 +39,10 @@ export const SurveyProvider = ({ children }) => {
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState('light');
 
   const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   return (

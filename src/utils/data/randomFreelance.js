@@ -66,54 +66,55 @@ const TECHNOS = {
 
 /**
  * Retrieves a random freelance profile.
- * @returns {Object} The freelance profile containing the name, job title, and picture.
+ * @returns {Promise<Object>} A promise that resolves to the random freelance profile.
  */
 async function getRandomFreelance() {
   try {
+    // Fetch the data from the API
     const response = await fetch('https://randomuser.me/api/?nat=fr');
 
     if (response.ok) {
+      // Parse the JSON data
       const data = await response.json();
       const user = data.results[0];
 
-      const randomJobIndex = Math.floor(Math.random() * JOBS.length);
-      const randomTechnoIndex = Math.floor(
-        Math.random() * TECHNOS[user.job.abridged].length
-      );
+      // Generate random job and technos
+      user.job = JOBS[Math.floor(Math.random() * JOBS.length)];
+      user.technos =
+        TECHNOS[user.job.abridged][
+          Math.floor(Math.random() * TECHNOS[user.job.abridged].length)
+        ];
 
-      const job = JOBS[randomJobIndex];
-      const techno = TECHNOS[user.job.abridged][randomTechnoIndex];
+      // Create the freelance profile object
+      const freelanceProfile = {
+        name: `${user.name.first} ${user.name.last}`,
+        jobTitle: `${user.job[user.gender]} ${user.technos}`.trim(),
+        picture: user.picture.large,
+      };
 
-      const name = `${user.name.first} ${user.name.last}`;
-      const jobTitle = `${user.job[user.gender]} ${techno}`.trim();
-      const picture = user.picture.large;
-
-      return { name, jobTitle, picture };
+      return freelanceProfile;
     } else {
+      // Handle HTTP error
       console.error(
         `HTTP-Error-${response.status} while fetching random freelances profiles at https://randomuser.me/api/?nat=fr`
       );
     }
   } catch (err) {
+    // Handle general error
     console.error(
-      `An error as occurred while fetching https://randomuser.me/api/?nat=fr: ${err}`
+      `An error as occured while fetching https://randomuser.me/api/?nat=fr : ${err}`
     );
   }
 }
 
-/**
- * Retrieves a specified number of random profiles.
- *
- * @param {number} quantity - The number of profiles to retrieve.
- * @returns {Array} - An array of random profiles.
- */
 export async function getRandomProfiles(quantity) {
-  const profiles = [];
+  const freelancesProfiles = [];
 
-  for (let i = 0; i < quantity; i++) {
+  for (let _ = 0; _ < quantity; _++) {
     const profile = await getRandomFreelance();
-    profiles.push(profile);
+    console.log(profile)
+    freelancesProfiles.push(profile);
   }
 
-  return profiles;
+  return freelancesProfiles;
 }

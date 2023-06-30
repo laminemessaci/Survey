@@ -1,16 +1,22 @@
-import { useContext } from "react";
-import { createGlobalStyle } from "styled-components";
+import { useContext } from 'react';
+import { createGlobalStyle } from 'styled-components';
 
-import { ThemeContext } from "../context/providers";
-import { colors } from "./colors";
+import { ThemeContext } from '../context/providers';
+import { colors } from './colors';
 
 /**
  * Renders the global style component based on the current theme.
  * @returns {React.Component} The rendered global style component.
  */
 export function GlobalStyle() {
-  const theme = useContext(ThemeContext)?.theme;
-  return <ThemedGlobalStyle isDarkTheme={theme === "dark"} />;
+  // Get the current theme from the context
+  const { theme } = useContext(ThemeContext) || {};
+
+  // Determine if the theme is dark
+  const isDarkTheme = theme === 'dark' ? true : false;
+
+  // Render the themed global style component
+  return <ThemedGlobalStyle isdarktheme={isDarkTheme} />;
 }
 
 const ThemedGlobalStyle = createGlobalStyle`
@@ -36,7 +42,7 @@ const ThemedGlobalStyle = createGlobalStyle`
   }
 
   ${(props) =>
-    props.isDarkTheme
+    props.isdarktheme
       ? `
     html {
       color: white;

@@ -1,11 +1,11 @@
-import { useCallback, useContext } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { useCallback, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { SurveyContext, ThemeContext } from "../utils/context/providers";
-import { colors } from "../utils/style/colors";
-import ShinyLogo from "../assets/logo-shiny.svg";
-import ShinyTextLogo from "../assets/logo-text-shiny.svg";
+import { SurveyContext, ThemeContext } from '../utils/context/providers';
+import { colors } from '../utils/style/colors';
+import ShinyLogo from '../assets/logo-shiny.svg';
+import ShinyTextLogo from '../assets/logo-text-shiny.svg';
 
 export function Header() {
   const { theme } = useContext(ThemeContext);
@@ -15,6 +15,11 @@ export function Header() {
     window.scrollTo(0, 0);
   }, []);
 
+  const handleClick = useCallback(() => {
+    scrollToTop();
+    clearSurveyAnswers();
+  }, [scrollToTop, clearSurveyAnswers]);
+
   return (
     <HeaderContainer>
       <LogoLink to="/">
@@ -22,27 +27,32 @@ export function Header() {
         <TextLogo
           src={ShinyTextLogo}
           alt="Agence Shiny"
-          isDarkTheme={theme === "dark"}
+          isdarktheme={theme === 'dark'}
         />
       </LogoLink>
       <nav>
         <MainNavList>
           <li>
-            <StyledLink onClick={scrollToTop} to="/" isDarkTheme={theme === "dark"}>
+            <StyledLink
+              onClick={scrollToTop}
+              to="/"
+              isdarktheme={theme === 'dark'}
+            >
               Accueil
             </StyledLink>
           </li>
           <li>
-            <StyledLink onClick={scrollToTop} to="/freelances" isDarkTheme={theme === "dark"}>
+            <StyledLink
+              onClick={scrollToTop}
+              to="/freelances"
+              isdarktheme={theme === 'dark'}
+            >
               Nos freelances
             </StyledLink>
           </li>
           <li>
             <StyledLink
-              onClick={() => {
-                scrollToTop();
-                clearSurveyAnswers();
-              }}
+              onClick={handleClick}
               to="/faire-le-test/1"
               className="highlighted-link"
             >
@@ -75,7 +85,7 @@ const Logo = styled.img`
 `;
 
 const TextLogo = styled.img`
-  filter: ${(props) => (props.isDarkTheme ? `` : `invert(100%)`)};
+  filter: ${(props) => (props.isdarktheme ? `` : `invert(100%)`)};
 `;
 
 const MainNavList = styled.ul`

@@ -1,22 +1,22 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { useCallback, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { SurveyContext, ThemeContext } from "../utils/context/providers";
-import { colors } from "../utils/style/colors";
-import HomeIllustration from "../assets/home-illustration.png";
+import { SurveyContext, ThemeContext } from '../utils/context/providers';
+import { colors } from '../utils/style/colors';
+import HomeIllustration from '../assets/home-illustration.png';
 
 export function Home() {
   const { theme } = useContext(ThemeContext);
   const { clearSurveyAnswers } = useContext(SurveyContext);
 
-  const handleTestButtonClick = () => {
+  const handleTestButtonClick = useCallback(() => {
     window.scrollTo(0, 0);
     clearSurveyAnswers();
-  };
+  }, [clearSurveyAnswers]);
 
   return (
-    <HomeContainer isDarkTheme={theme === "dark"}>
+    <HomeContainer isdarktheme={theme === 'dark'}>
       <div>
         <Slogan>
           Repérez vos besoins, on s'occupe du reste, avec les meilleurs talents
@@ -39,7 +39,7 @@ const HomeContainer = styled.main`
   padding: 11rem 6rem;
 
   background: ${(props) =>
-    props.isDarkTheme ? `${colors.neutral700}` : `${colors.neutral100}`};
+    props.isdarktheme ? `${colors.neutral700}` : `${colors.neutral100}`};
 `;
 
 const Slogan = styled.h1`

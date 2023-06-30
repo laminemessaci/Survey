@@ -1,25 +1,50 @@
-import { useContext, useState } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import { ThemeContext } from "../utils/context/providers";
-import { colors } from "../utils/style/colors";
-import DefaultPicture from "../assets/profile.png";
+import { ThemeContext } from '../utils/context/providers';
+import { colors } from '../utils/style/colors';
+import DefaultPicture from '../assets/profile.png';
 
+/**
+ * Render a Card component with name, job title, and picture.
+ * @param {string} name - The name of the person.
+ * @param {string} jobTitle - The job title of the person.
+ * @param {string} picture - The URL of the person's picture.
+ * @returns {JSX.Element} The rendered Card component.
+ */
 export function Card({ name, jobTitle, picture }) {
+  // Get the theme from the ThemeContext
   const { theme } = useContext(ThemeContext);
+
+  // Set up state for favorite status
   const [isFavorite, setIsFavorite] = useState(false);
 
+  // Generate a unique test ID for the star icon
+  const cardTestId = `star-icon-${name.replace(' ', '')}`;
+
+  // Handle click event for favorite icon
+  const handleFavoriteClick = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   return (
-    <CardContainer isDarkTheme={theme === "dark"}>
-      <CardJobTitle isDarkTheme={theme === "dark"}>{jobTitle}</CardJobTitle>
+    <CardContainer isdarktheme={theme === 'dark'}>
+      {/* Render the job title */}
+      <CardJobTitle isdarktheme={theme === 'dark'}>{jobTitle}</CardJobTitle>
+
+      {/* Render the picture */}
       <CardPicture src={picture} alt={`Portrait de ${name}`} />
+
+      {/* Render the favorite icon */}
       <CardStar
-        onClick={() => setIsFavorite(!isFavorite)}
+        onClick={handleFavoriteClick}
         isFavorite={isFavorite}
-        isDarkTheme={theme === "dark"}
-        data-testid={`star-icon-${name.replace(" ", "")}`}
+        isdarktheme={theme === 'dark'}
+        data-testid={cardTestId}
       ></CardStar>
+
+      {/* Render the name */}
       <CardName>{name}</CardName>
     </CardContainer>
   );
@@ -46,7 +71,7 @@ const CardContainer = styled.div`
   text-align: center;
 
   background: ${(props) =>
-    props.isDarkTheme ? `${colors.neutral700}` : `${colors.neutral100}`};
+    props.isdarktheme ? `${colors.neutral700}` : `${colors.neutral100}`};
 
   cursor: pointer;
   transition: 200ms;
@@ -54,7 +79,7 @@ const CardContainer = styled.div`
   &:hover {
     border-color: ${colors.primary500};
     border-color: ${(props) =>
-      props.isDarkTheme ? `${colors.neutral200}` : `${colors.primary500}`};
+      props.isdarktheme ? `${colors.neutral200}` : `${colors.primary500}`};
   }
 `;
 
@@ -74,17 +99,17 @@ const CardStar = styled.span`
     border: 0.25rem solid transparent;
     border-radius: 50%;
     border-color: ${(props) =>
-      props.isDarkTheme ? `${colors.neutral700}` : `${colors.neutral100}`};
+      props.isdarktheme ? `${colors.neutral700}` : `${colors.neutral100}`};
 
     color: ${(props) =>
       props.isFavorite ? `${colors.primary500}` : `${colors.neutral300}`};
-    font-family: "Font Awesome 5 Free";
+    font-family: 'Font Awesome 5 Free';
     font-size: 2rem;
     font-weight: 900;
 
     background: ${colors.primary100};
 
-    content: "\f005";
+    content: '\f005';
   }
 `;
 
@@ -93,7 +118,7 @@ const CardJobTitle = styled.h2`
   margin: 0;
 
   color: ${(props) =>
-    props.isDarkTheme ? `${colors.neutral200}` : `${colors.primary500}`};
+    props.isdarktheme ? `${colors.neutral200}` : `${colors.primary500}`};
   line-height: 1.4;
   font-size: 1.25rem;
   font-weight: 700;

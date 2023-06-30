@@ -1,64 +1,56 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
 
-import { ErrorMain } from "../components/ErrorMain";
-import { SurveyContext, ThemeContext } from "../utils/context/providers";
-import { useFetch } from "../utils/hooks/useFetch";
-import { colors } from "../utils/style/colors";
-import NoSkillNeededIllustration from "../assets/no-skill-needed.png";
+import { ErrorMain } from '../components/ErrorMain';
+import { SurveyContext, ThemeContext } from '../utils/context/providers';
+import { useFetch } from '../utils/hooks/useFetch';
+import { colors } from '../utils/style/colors';
+import NoSkillNeededIllustration from '../assets/no-skill-needed.png';
 
 /**
- * Determines the needed skills based on a survey and user answers.
+ * Returns an array of needed skills based on user answers to a survey.
  *
- * @param {Object} survey - The survey object.
- * @param {Object} userAnswers - The user's answers object.
- * @returns {Array} - The array of needed skills.
+ * @param {Object} survey - The survey object containing the questions and associated skills.
+ * @param {Object} userAnswers - The user's answers to the survey questions.
+ * @returns {Array} - An array of needed skills.
  */
 export function determineNeededSkills(survey, userAnswers) {
-  // Create a set to store the needed skills
+  // Create a Set to store the needed skills
   const neededSkills = new Set();
 
-  // Iterate over each question and answer in the user's answers
+  // Iterate over each user answer
   Object.entries(userAnswers).forEach(([questionKey, answer]) => {
-    // If the answer is true
+    // If the answer is true, add the associated skills to the neededSkills set
     if (answer) {
-      // Iterate over each associated skill of the question
-      survey.questions[questionKey].associatedSkills.forEach(skill => {
-        // Add the skill to the needed skills set
-        neededSkills.add(skill);
-      });
+      neededSkills.add(...survey.questions[questionKey].associatedSkills);
     }
   });
 
-  // Convert the set to an array and return the needed skills
+  // Convert the Set to an array and return it
   return Array.from(neededSkills);
 }
 
 export function Results() {
   const { theme } = useContext(ThemeContext);
   const { surveyAnswers } = useContext(SurveyContext);
-  const { data, isDataLoading, error } = useFetch("../data/sample-survey.json");
+  const { data, isDataLoading, error } = useFetch('../data/sample-survey.json');
   const survey = data;
-
-  // console.log("survey =", survey);
-  // console.log("User answers =", surveyAnswers);
 
   if (error) {
     return (
       <ErrorMain errorText="Oups, il y a eu un problème dans le traitement de vos réponses." />
     );
   }
+  if(isDataLoading) return <Loader />
 
   const neededSkills = isDataLoading
     ? []
     : determineNeededSkills(survey, surveyAnswers);
 
-  console.log("neededSkills =", neededSkills);
-
   if (neededSkills.length === 0) {
     return (
-      <NoSkillContainer isDarkTheme={theme === "dark"}>
+      <NoSkillContainer isdarktheme={theme === 'dark'}>
         <NoSkillHeadline>Dommage...</NoSkillHeadline>
         <NoSkillIllustration src={NoSkillNeededIllustration} alt="Erreur 404" />
         <NoSkillText>
@@ -71,23 +63,17 @@ export function Results() {
     );
   }
 
-  const skillsSummary = neededSkills.join(", ");
-  const skillsDetails = [];
-
-  for (let skill of neededSkills) {
-    skillsDetails.push({
-      jobTitle: skill,
-      jobDescription: survey.jobs[skill],
-    });
-  }
-
-  // console.log("skillsDetails =", skillsDetails);
+  const skillsSummary = neededSkills.join(', ');
+  const skillsDetails = neededSkills.map(skill => ({
+    jobTitle: skill,
+    jobDescription: survey.jobs[skill],
+  }));
 
   return (
-    <ResultsContainer isDarkTheme={theme === "dark"}>
+    <ResultsContainer isdarktheme={theme === 'dark'}>
       <ResultsTitle>
-        Les compétences dont vous avez besoin&nbsp;:{" "}
-        <NeededSkillsSpan isDarkTheme={theme === "dark"}>
+        Les compétences dont vous avez besoin&nbsp;:{' '}
+        <NeededSkillsSpan isdarktheme={theme === 'dark'}>
           {skillsSummary}
         </NeededSkillsSpan>
       </ResultsTitle>
@@ -97,16 +83,14 @@ export function Results() {
         </CallToActionLink>
       </CallToActionContainer>
       <JobsDetails>
-        {skillsDetails.map((skill) => {
-          return (
-            <div key={`job-detail-${skill.jobTitle}`}>
-              <JobTitle isDarkTheme={theme === "dark"}>
-                {skill.jobTitle}
-              </JobTitle>
-              <JobDescription>{skill.jobDescription}</JobDescription>
-            </div>
-          );
-        })}
+        {skillsDetails.map(skill => (
+          <div key={`job-detail-${skill.jobTitle}`}>
+            <JobTitle isdarktheme={theme === 'dark'}>
+              {skill.jobTitle}
+            </JobTitle>
+            <JobDescription>{skill.jobDescription}</JobDescription>
+          </div>
+        ))}
       </JobsDetails>
     </ResultsContainer>
   );
@@ -118,7 +102,7 @@ const NoSkillContainer = styled.main`
   text-align: center;
 
   background: ${(props) =>
-    props.isDarkTheme ? `${colors.neutral700}` : `${colors.neutral100}`};
+    props.isdarktheme ? `${colors.neutral700}` : `${colors.neutral100}`};
 `;
 
 const NoSkillHeadline = styled.p`
@@ -140,7 +124,7 @@ const ResultsContainer = styled.main`
   padding: 9rem 6rem;
 
   background: ${(props) =>
-    props.isDarkTheme ? `${colors.neutral700}` : `${colors.neutral100}`};
+    props.isdarktheme ? `${colors.neutral700}` : `${colors.neutral100}`};
 `;
 
 const ResultsTitle = styled.h1`
@@ -153,7 +137,7 @@ const ResultsTitle = styled.h1`
 
 const NeededSkillsSpan = styled.span`
   color: ${(props) =>
-    props.isDarkTheme ? `${colors.neutral300}` : `${colors.primary500}`};
+    props.isdarktheme ? `${colors.neutral300}` : `${colors.primary500}`};
 `;
 
 const CallToActionContainer = styled.div`
@@ -184,10 +168,26 @@ const JobTitle = styled.h2`
   margin: 2rem 0 0.5rem 0;
 
   color: ${(props) =>
-    props.isDarkTheme ? `${colors.neutral300}` : `${colors.primary500}`};
+    props.isdarktheme ? `${colors.neutral300}` : `${colors.primary500}`};
 `;
 
 const JobDescription = styled.p`
   margin: 0;
   font-size: 1.3rem;
+`;
+
+const rotate = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`;
+const Loader = styled.p`
+  width: 0;
+  margin: 12.5rem auto;
+  padding: 1.5rem;
+  border: 0.5rem solid ${colors.primary500};
+  border-bottom-color: transparent;
+  border-radius: 50%;
+
+  animation: ${rotate} 500ms infinite linear;
 `;

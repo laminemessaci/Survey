@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import styled from "styled-components";
+import { useContext } from 'react';
+import styled from 'styled-components';
 
-import { ThemeContext } from "../utils/context/providers";
-import { colors } from "../utils/style/colors";
+import { ThemeContext } from '../utils/context/providers';
+import { colors } from '../utils/style/colors';
 
 /**
  * Renders the footer component.
@@ -12,17 +12,19 @@ import { colors } from "../utils/style/colors";
 export function Footer() {
   // Get the theme and toggleTheme function from the ThemeContext
   const { theme, toggleTheme } = useContext(ThemeContext);
-  
+
   // Check if the theme is dark
-  const isDarkTheme = theme === "dark";
-  
+  const isdarktheme = theme === 'dark';
+
   // Set the message based on the theme
-  const themeMessage = isDarkTheme ? "Passer en mode clair" : "Passer en mode sombre";
+  const themeMessage = isdarktheme
+    ? 'Passer en mode clair'
+    : 'Passer en mode sombre';
 
   // Render the footer component
   return (
-    <FooterContainer isDarkTheme={isDarkTheme}>
-      <ThemeSwitcher onClick={toggleTheme} isDarkTheme={isDarkTheme}>
+    <FooterContainer isdarktheme={isdarktheme}>
+      <ThemeSwitcher onClick={toggleTheme} isdarktheme={isdarktheme}>
         {themeMessage}
       </ThemeSwitcher>
     </FooterContainer>
@@ -34,9 +36,10 @@ const FooterContainer = styled.footer`
   justify-content: flex-end;
   padding: 2rem 4rem;
 
-  background: ${colors.secondary500};
-
-  ${(props) => (props.isDarkTheme ? `background: ${colors.neutral700};` : ``)}
+  ${(props) =>
+    props.isdarktheme
+      ? `background: ${colors.neutral700};`
+      : `${colors.secondary500}`}
 `;
 
 const ThemeSwitcher = styled.button`
@@ -54,7 +57,7 @@ const ThemeSwitcher = styled.button`
   cursor: pointer;
 
   ${(props) =>
-    props.isDarkTheme
+    props.isdarktheme
       ? `
         color: white;
         background: ${colors.neutral900}`

@@ -1,21 +1,25 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { ThemeContext } from "../utils/context/providers";
-import { colors } from "../utils/style/colors";
+import { ThemeContext } from '../utils/context/providers';
+import { colors } from '../utils/style/colors';
 
+/**
+ * Renders the main error component.
+ * 
+ * @param {Object} props - The component props.
+ * @param {string} props.errorText - The error text to be displayed.
+ * @returns {JSX.Element} The rendered error component.
+ */
 export function ErrorMain({ errorText }) {
+  // Get the current theme from the context
   const { theme } = useContext(ThemeContext);
 
   return (
-    <ErrorContainer isDarkTheme={theme === "dark"}>
-      <ErrorText>
-        {errorText}
-      </ErrorText>
-      <CallToActionLink to="/">
-        Revenir à l'accueil
-      </CallToActionLink>
+    <ErrorContainer isdarktheme={theme === 'dark'}>
+      <ErrorText>{errorText}</ErrorText>
+      <CallToActionLink to="/">Revenir à l'accueil</CallToActionLink>
     </ErrorContainer>
   );
 }
@@ -26,7 +30,7 @@ const ErrorContainer = styled.main`
   text-align: center;
 
   background: ${(props) =>
-    props.isDarkTheme ? `${colors.neutral700}` : `${colors.neutral100}`};
+    props.isdarktheme ? `${colors.neutral700}` : `${colors.neutral100}`};
 `;
 
 const ErrorText = styled.p`

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link, useHistory, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 
 import { ErrorMain } from '../components/ErrorMain';
@@ -7,39 +7,48 @@ import { SurveyContext, ThemeContext } from '../utils/context/providers';
 import { useFetch } from '../utils/hooks/useFetch';
 import { colors } from '../utils/style/colors';
 
-export function Survey() {
-  const navigate = useNavigate();
-  const { theme } = useContext(ThemeContext);
-  const { surveyAnswers, saveSurveyAnswers } = useContext(SurveyContext);
-  const { data, isDataLoading, error } = useFetch('../data/sample-survey.json');
-  const survey = data;
 
+// This function represents a survey component that allows users to answer questions
+export function Survey() {
+  // Import necessary hooks and contexts
+  const navigate = useNavigate(); // Navigation hook
+  const { theme } = useContext(ThemeContext); // Theme context
+  const { surveyAnswers, saveSurveyAnswers } = useContext(SurveyContext); // Survey context
+
+  // Fetch survey data from a JSON file
+  const { data, isDataLoading, error } = useFetch(
+    `${process.env.PUBLIC_URL}/data/sample-survey.json`
+  );
+
+  // Get the current question number from the URL parameters
   const { questionId } = useParams();
   const questionNumber = parseInt(questionId);
 
+  // Handle error if there is an issue fetching the survey data
   if (error) {
     return (
       <ErrorMain errorText="Oups, il y a eu un problème pour récupérer les questions du test" />
     );
   }
 
-  const lastQuestionNumber = survey?.questions
+  // Extract survey data and calculate necessary variables
+  const survey = data;
+  const lastQuestionNumber = survey.questions
     ? Object.keys(survey.questions).length
     : 1;
   const prevQuestionNumber = Math.max(1, questionNumber - 1);
   const nextQuestionNumber = Math.min(questionNumber + 1, lastQuestionNumber);
 
-  function saveUserAnswer(answer) {
-    saveSurveyAnswers({ [questionNumber]: answer });
+// Save the user's answer and navigate to the next question or results page
+function saveUserAnswer(answer) {
+  saveSurveyAnswers({ [questionNumber]: answer });
 
-    if (questionNumber === lastQuestionNumber) {
-      window.scrollTo(0, 0);
-      navigate(`/resultats`);
-    } else {
-      navigate(`/faire-le-test/${nextQuestionNumber}`);
-    }
-  }
+  const destination = questionNumber === lastQuestionNumber ? "/results" : `/faire-le-test/${nextQuestionNumber}`;
+  window.scrollTo(0, 0);
+  navigate(destination);
+}
 
+  // Render the survey component
   return (
     <SurveyContainer>
       <QuestionNumber>Question {questionNumber}</QuestionNumber>
@@ -47,7 +56,9 @@ export function Survey() {
       {isDataLoading ? (
         <Loader />
       ) : (
-        <Question>{survey?.questions[questionNumber]?.question || ''}</Question>
+        <Question>
+          {survey ? survey.questions[questionNumber].question : ''}
+        </Question>
       )}
 
       <AnswersButtonsWrapper>
