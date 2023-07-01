@@ -7,13 +7,18 @@ import { colors } from '../utils/style/colors';
 import ShinyLogo from '../assets/logo-shiny.svg';
 import ShinyTextLogo from '../assets/logo-text-shiny.svg';
 
+import Moon from '../assets/moon.png';
+import Sun from '../assets/sun.png';
+
 /**
  * Renders the header component.
  *
  * @return {ReactElement} The rendered header component.
  */
 export function Header() {
-  const { theme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
+  const isDarkMode = theme === 'dark';
   const { clearSurveyAnswers } = useContext(SurveyContext);
 
   const scrollToTop = useCallback(() => {
@@ -35,6 +40,7 @@ export function Header() {
           isdarktheme={theme === 'dark'}
         />
       </LogoLink>
+
       <nav>
         <MainNavList>
           <li>
@@ -66,6 +72,9 @@ export function Header() {
           </li>
         </MainNavList>
       </nav>
+      <Toggle light={isDarkMode ? true : false} onClick={toggleTheme}>
+        <ThemeImage src={isDarkMode ? `${Sun}` : `${Moon}`} />
+      </Toggle>
     </HeaderContainer>
   );
 }
@@ -75,7 +84,7 @@ const HeaderContainer = styled.header`
   align-items: center;
   justify-content: space-between;
 
-  padding: 3rem 0;
+  padding: 1rem 0;
 `;
 
 const LogoLink = styled(Link)`
@@ -129,5 +138,25 @@ const StyledLink = styled(Link)`
     &:hover {
       color: ${colors.neutral100};
     }
+  }
+`;
+const ThemeImage = styled.img`
+  max-width: 40px;
+`;
+
+const Toggle = styled.button`
+  padding: 1rem;
+  border: none;
+  outline: none;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+  background: none;
+  color: ${(props) => (!props.light ? '#eee' : '#333')};
+  top: 0;
+  right: 0;
+
+  &:hover {
+    transition: 0.2s all ease-in-out;
   }
 `;

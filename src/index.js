@@ -21,9 +21,9 @@ import { Footer } from './components/Footer.jsx';
 const App = async () => {
   const profileQuantity = 4 + Math.ceil(Math.random() * 4);
   const freelances = await getRandomProfiles(profileQuantity);
-  
+
   const root = ReactDOM.createRoot(document.getElementById('root'));
-  
+
   root.render(
     <React.StrictMode>
       <Router>
@@ -34,11 +34,14 @@ const App = async () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/faire-le-test/:questionId" element={<Survey />} />
-              <Route path="/freelances" element={<Freelances freelances={freelances} />} />
+              <Route
+                path="/freelances"
+                element={<Freelances freelances={freelances} />}
+              />
               <Route path="/results" element={<Results />} />
               <Route path="*" element={<Error404 />} />
             </Routes>
-            <Footer />
+            {/* <Footer /> */}
           </SurveyProvider>
         </ThemeProvider>
       </Router>
