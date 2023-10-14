@@ -1,17 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import './index.css';
-import { Home } from './pages/Home.jsx';
-import { Survey } from './pages/Survey.jsx';
-import { SurveyProvider, ThemeProvider } from './utils/context/providers.jsx';
-import { GlobalStyle } from './utils/style/GlobalStyle.jsx';
-import { Header } from './components/Header.jsx';
-import { Results } from './pages/Results.jsx';
-import { Freelances } from './pages/Freelances.jsx';
-import { Error404 } from './pages/Error404.jsx';
-import { getRandomProfiles } from './utils/data/randomFreelance.js';
-import { Footer } from './components/Footer.jsx';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Header } from "./components/Header.jsx";
+import "./index.css";
+import { Error404 } from "./pages/Error404.jsx";
+import { Freelances } from "./pages/Freelances.jsx";
+import { Home } from "./pages/Home.jsx";
+import { Results } from "./pages/Results.jsx";
+import { Survey } from "./pages/Survey.jsx";
+import { SurveyProvider, ThemeProvider } from "./utils/context/providers.jsx";
+import { getRandomProfiles } from "./utils/data/randomFreelance.js";
+import { GlobalStyle } from "./utils/style/GlobalStyle.jsx";
 
 /**
  * Renders the App component.
@@ -22,7 +21,7 @@ const App = async () => {
   const profileQuantity = 4 + Math.ceil(Math.random() * 4);
   const freelances = await getRandomProfiles(profileQuantity);
 
-  const root = ReactDOM.createRoot(document.getElementById('root'));
+  const root = ReactDOM.createRoot(document.getElementById("root"));
 
   root.render(
     <React.StrictMode>
