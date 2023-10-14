@@ -13,7 +13,6 @@ Check out the live demo: [Survey Agency](https://survey-agency.netlify.app/)
 
 - [Survey Agency](#survey-agency)
   - [Table of Contents](#table-of-contents)
-  - [Demo](#demo)
   - [Features](#features)
   - [Installation](#installation)
 
