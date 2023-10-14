@@ -1,12 +1,13 @@
-<h1 align="center"> Survey Agency </h1>
-<p align="center"> <img src='\public\logo512.png' /> </p>
-<p align ="center">Prototype de Front-end realised with _React_, _React Router_, _Jest_ et _React Testing Library_.  </p>
-
 # Survey Agency
 
-![Survey Agency](\public/home-dark.png)
+<p align="center"> <img src='\public\home-white.png' /> <img src='\public\home-dark.png' /> </p>
+<p align ="center">Prototype de Front-end realised with _React_, _React Router_, _Jest_ et _React Testing Library_.  </p>
 
 Survey Agency is a web application built with React that allows users to create and manage surveys.
+## Demo
+
+Check out the live demo: [Survey Agency](https://survey-agency.netlify.app/)
+
 
 ## Table of Contents
 
@@ -16,9 +17,6 @@ Survey Agency is a web application built with React that allows users to create 
   - [Features](#features)
   - [Installation](#installation)
 
-## Demo
-
-Check out the live demo: [Survey Agency](https://survey-agency.netlify.app/)
 
 ## Features
 
