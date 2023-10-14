@@ -4,7 +4,7 @@
 
 # Survey Agency
 
-![Survey Agency](link-to-survey-agency-image.png)
+![Survey Agency](\public/home-dark.png)
 
 Survey Agency is a web application built with React that allows users to create and manage surveys.
 
