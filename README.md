@@ -6,7 +6,7 @@
 Survey Agency is a web application built with React that allows users to create and manage surveys.
 ## Demo  [![Netlify Status](https://api.netlify.com/api/v1/badges/ba656873-abea-4d7a-8c68-848fcd7d929e/deploy-status)](https://app.netlify.com/sites/survey-agency/deploys)
 
-Check out the live demo: [Survey Agency](https://survey-agency.netlify.app/)
+Check out the live demo: [Survey Agency](https://agence-shiny.onrender.com/)
 
 
 ## Table of Contents
